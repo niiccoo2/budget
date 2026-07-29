@@ -1,0 +1,1 @@
+This is going to be a pretty custom budgeting website that I use. Not sure how long I am going to use this, as it is intended for non standard income, although I might continue it and change once my state changes.
