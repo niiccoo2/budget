@@ -23,3 +23,5 @@ Now going to work on the part that tells me how much money I need to transfer to
 #### 15:00 | x hours
 
 Going to finish the send to savings UI and add subscriptions.
+
+I need to organize this project, it's getting a bit messy.
