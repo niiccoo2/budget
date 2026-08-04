@@ -25,6 +25,9 @@
 	let newSubscriptionPeriod: number = 0;
 	let newSubscriptionStartDate: string = '';
 	let newSubscriptionEndDate: string = '';
+	let monthlySpend: number = 0;
+
+	$: monthlySpend = calculateSpendForMonth(new Date());
 
 	function onNewSubscriptionSubmit(event: SubmitEvent) {
 		event.preventDefault();
@@ -50,7 +53,7 @@
 </script>
 
 <div>
-	<Text>You are spending ${calculateSpendForMonth(new Date())} per month on subscriptions.</Text>
+	<Text>You are spending ${monthlySpend} per month on subscriptions.</Text>
 </div>
 <DataTable
 	headers={[
