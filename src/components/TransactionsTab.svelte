@@ -91,7 +91,7 @@
 
 <div>
 	{#if calculateAmountSendSavings() > 0}
-		<Tag type="red">You must send ${calculateAmountSendSavings()} to savings.</Tag>
+		<Tag type="red">You must send ${calculateAmountSendSavings().toFixed(2)} to savings.</Tag>
 	{:else}
 		<Tag type="red" style="visibility: hidden;"
 			>You must send ${calculateAmountSendSavings()} to savings.</Tag

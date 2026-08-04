@@ -28,5 +28,5 @@ export function calculateSpendForMonth(checkingDate: Date) {
 		}
 	}
 
-	return totalCost;
+	return Number(totalCost.toFixed(2));
 }
