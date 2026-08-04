@@ -30,7 +30,7 @@
 		for (let item of items) {
 			let date = new Date(item.date);
 			date.setDate(1);
-			date.setHours(0, 0, 0, 0);
+			date.setHours(1, 0, 0, 0); // set to 01:00 as to not catch subs from month before
 
 			// .getTime() returns a primitive number, which Set/includes CAN compare correctly!
 			uniqueTimeStamps.add(date.getTime());
