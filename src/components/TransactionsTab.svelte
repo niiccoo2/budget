@@ -16,11 +16,28 @@
 	} from 'carbon-components-svelte';
 	import { makeNiceNumber } from '$lib/helpers';
 	import type { Item } from '$lib/types';
+	import { calculateSpendForMonth } from '$lib/helpers';
 
 	let newItemName: string = '';
 	let newItemAmount: number = 0;
 	let openTransactionDialog: boolean = false;
 	let savingsCheck: boolean = false;
+
+	function findMonths(items: Item[]): Date[] {
+		const uniqueTimeStamps = new Set<number>();
+
+		for (let item of items) {
+			let date = new Date(item.date);
+			date.setDate(1);
+			date.setHours(0, 0, 0, 0);
+
+			// .getTime() returns a primitive number, which Set/includes CAN compare correctly!
+			uniqueTimeStamps.add(date.getTime());
+		}
+
+		// Convert the unique timestamps back into Date objects
+		return Array.from(uniqueTimeStamps).map((time) => new Date(time));
+	}
 
 	function calculateAmountSendSavings() {
 		let sendSavingsAmount: number = 0;
@@ -28,6 +45,13 @@
 		for (let item of $itemsStore) {
 			if (item.type == 'normal' && item.amount > 0) sendSavingsAmount += item.amount / 2;
 			else if (item.type == 'savings' && item.amount < 0) sendSavingsAmount += item.amount;
+		}
+
+		let activeMonths: Date[] = findMonths($itemsStore);
+
+		for (let month of activeMonths) {
+			// for each month that has things happening
+			sendSavingsAmount += calculateSpendForMonth(month);
 		}
 
 		return sendSavingsAmount;

@@ -16,7 +16,7 @@
 		Text
 	} from 'carbon-components-svelte';
 	import { subscriptionsStore, removeItem } from '$lib/stores';
-	import { makeNiceNumber } from '$lib/helpers';
+	import { makeNiceNumber, calculateSpendForMonth } from '$lib/helpers';
 	import type { Subscription } from '$lib/types';
 
 	let openSubscriptionDialog: boolean = false;
@@ -47,41 +47,10 @@
 		newSubscriptionStartDate = '';
 		newSubscriptionEndDate = '';
 	}
-
-	function calcSpendForMonth(checkingDate: Date) {
-		let totalCost: number = 0;
-
-		for (let subscription of $subscriptionsStore) {
-			let subscriptionStart = new Date(subscription.startDate);
-			subscriptionStart.setDate(0); // Set to the beginning of teh month so that we are checking if it happened at all that month.
-			subscriptionStart.setTime(0); // We are pushing start to the beginning of this month, and pushing end to beginning of next month
-
-			let subscriptionEnd = new Date(subscription.endDate);
-			subscriptionEnd.setDate(0);
-			subscriptionEnd.setTime(0);
-			if (subscriptionEnd.getMonth() < 11) {
-				// If month is not 11, iterate, otherwise, set to 0 and iterate year
-				subscriptionEnd.setMonth(subscriptionEnd.getMonth() + 1);
-			} else {
-				subscriptionEnd.setMonth(0);
-				subscriptionEnd.setFullYear(subscriptionEnd.getFullYear() + 1);
-			}
-
-			if (
-				subscriptionStart.getTime() > checkingDate.getTime() &&
-				subscriptionEnd.getTime() > checkingDate.getTime()
-			) {
-				// Is checking if current date is after (higher number secs) start, and end is after current.
-				totalCost += subscription.cost;
-			}
-		}
-
-		return totalCost;
-	}
 </script>
 
 <div>
-	<Text>You are spending {calcSpendForMonth(new Date())}</Text>
+	<Text>You are spending ${calculateSpendForMonth(new Date())} per month on subscriptions.</Text>
 </div>
 <DataTable
 	headers={[
@@ -125,7 +94,13 @@
 <Modal bind:open={openSubscriptionDialog} modalHeading="Add transaction" passiveModal>
 	<Form on:submit={onNewSubscriptionSubmit}>
 		<TextInput bind:value={newSubscriptionService} fluid labelText="Service" />
-		<NumberInput bind:value={newSubscriptionCost} step={0.01} fluid hideSteppers labelText="Cost" />
+		<NumberInput
+			bind:value={newSubscriptionCost}
+			step={0.01}
+			fluid
+			hideSteppers
+			labelText="Cost (dollars)"
+		/>
 		<NumberInput
 			bind:value={newSubscriptionPeriod}
 			fluid
