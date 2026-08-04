@@ -149,7 +149,7 @@
 		{#if !savingsCheck}
 			<TextInput bind:value={newItemName} fluid labelText="Item" />
 		{/if}
-		<NumberInput bind:value={newItemAmount} fluid hideSteppers labelText="Amount" />
+		<NumberInput bind:value={newItemAmount} step={0.01} fluid hideSteppers labelText="Amount" />
 
 		<div class="button-row">
 			<Button kind="secondary" size="field" on:click={() => (openTransactionDialog = false)}>
