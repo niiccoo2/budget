@@ -18,10 +18,14 @@ For now, this is just going to basically take how ever much money I make, devide
 
 Now going to work on the part that tells me how much money I need to transfer to my savings account. There are a lot of better ways to do this (code wise), but they take more time, and right now, I don't really have time, I just want a working product.
 
-### Monday, August 3rd | x hours
+### Monday, August 3rd | 3 hours
 
-#### 15:00 | x hours
+#### 15:00 | 3 hours
 
 Going to finish the send to savings UI and add subscriptions.
 
 I need to organize this project, it's getting a bit messy.
+
+#### 22:00 | x hours
+
+Done with the MVP, now just writing up a readme. Now that I think about it, you don't need to have the user enter an end date bc we tell the period, but whatever. Might fix that later.
