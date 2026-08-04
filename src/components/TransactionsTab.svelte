@@ -12,7 +12,8 @@
 		OverflowMenu,
 		OverflowMenuItem,
 		Checkbox,
-		Tag
+		Tag,
+		Text
 	} from 'carbon-components-svelte';
 	import { makeNiceNumber } from '$lib/helpers';
 	import type { Item } from '$lib/types';
@@ -87,16 +88,31 @@
 		savingsCheck = false;
 		openTransactionDialog = false;
 	}
+
+	function calcTotalBalance() {
+		let totalBalance: number = 0;
+
+		for (let item of $itemsStore) {
+			totalBalance += item.amount;
+		}
+
+		return totalBalance;
+	}
 </script>
 
-<div>
-	{#if calculateAmountSendSavings() > 0}
-		<Tag type="red">You must send ${calculateAmountSendSavings().toFixed(2)} to savings.</Tag>
-	{:else}
-		<Tag type="red" style="visibility: hidden;"
-			>You must send ${calculateAmountSendSavings()} to savings.</Tag
-		>
-	{/if}
+<div class="top-row">
+	<div>
+		{#if calculateAmountSendSavings() > 0}
+			<Tag type="red">You must send ${calculateAmountSendSavings().toFixed(2)} to savings.</Tag>
+		{:else}
+			<Tag type="red" style="visibility: hidden;"
+				>You must send ${calculateAmountSendSavings()} to savings.</Tag
+			>
+		{/if}
+	</div>
+	<div class="right-item">
+		<Text>Current balance: <span class="positive">{makeNiceNumber(calcTotalBalance())}</span></Text>
+	</div>
 </div>
 <DataTable
 	headers={[
@@ -155,5 +171,15 @@
 		justify-content: flex-end;
 		gap: 1rem;
 		margin-top: 1.5rem;
+	}
+
+	.top-row {
+		display: flex;
+		align-items: center; /* vertical alignment */
+		gap: 1rem;
+	}
+
+	.right-item {
+		margin-left: auto;
 	}
 </style>
