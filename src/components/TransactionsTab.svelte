@@ -55,7 +55,7 @@
 			sendSavingsAmount += calculateSpendForMonth(month);
 		}
 
-		return sendSavingsAmount;
+		return Math.round(sendSavingsAmount * 100) / 100;
 	}
 
 	function handleSubmit(event: SubmitEvent) {
@@ -96,14 +96,14 @@
 			totalBalance += item.amount;
 		}
 
-		return totalBalance;
+		return Math.round(totalBalance * 100) / 100;
 	}
 </script>
 
 <div class="top-row">
 	<div>
 		{#if calculateAmountSendSavings() > 0}
-			<Tag type="red">You must send ${calculateAmountSendSavings().toFixed(2)} to savings.</Tag>
+			<Tag type="red">You must send ${calculateAmountSendSavings()} to savings.</Tag>
 		{:else}
 			<Tag type="red" style="visibility: hidden;"
 				>You must send ${calculateAmountSendSavings()} to savings.</Tag
