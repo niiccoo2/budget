@@ -16,8 +16,11 @@ export function calculateSpendForMonth(checkingDate: Date) {
 
 		let subscriptionEnd = new Date(subscription.endDate);
 		subscriptionEnd.setDate(1);
-		subscriptionEnd.setHours(0, 0, 0, 0);
+		subscriptionEnd.setHours(1, 0, 0, 0);
 		subscriptionEnd.setMonth(subscriptionEnd.getMonth() - 1); // bring to beginning to math start
+
+		checkingDate.setDate(1);
+		checkingDate.setHours(0, 30, 0, 0);
 
 		if (
 			subscriptionStart.getTime() <= checkingDate.getTime() &&
